@@ -1,13 +1,12 @@
 export const root = document.getElementById('root');
+
+// menu
+export const menuSignout = document.getElementById('menu-signout');
+
 // form
 export const formSignin = document.getElementById('form-signin');
 
 // modal
-
-
-
-
-
 
 export const modalInfobox = {
     modal: new bootstrap.Modal(document.getElementById('modal-infobox'), {backdrop: 'static'}),
