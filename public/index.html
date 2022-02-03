@@ -31,10 +31,10 @@
               data-bs-target="#modal-signin">Sign In</button>
           </li>
           <li class="nav-item">
-            <button class="btn btn-outline-primary modal-postauth">Home</button>
+            <button id="menu-home" class="btn btn-outline-primary modal-postauth">Home</button>
           </li>
           <li class="nav-item">
-            <button class="btn btn-outline-primary modal-postauth">Users</button>
+            <button id="menu-users" class="btn btn-outline-primary modal-postauth">Users</button>
           </li>
           <li class="nav-item">
             <button id="menu-signout" class="btn btn-outline-danger modal-postauth">Sign Out</button>
@@ -87,32 +87,33 @@
         </div>
       </div>
     </div>
-    <div id="root" class="bg-light p-5 m-3"></div>
+  </div>
+  <div id="root" class="bg-light p-5 m-3"></div>
 
-    <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
 
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyAfoMI2xvjSpQcNIIR7Fpy62owH8ENdUaA",
-        authDomain: "cmsc5373-ramya-webapps.firebaseapp.com",
-        projectId: "cmsc5373-ramya-webapps",
-        storageBucket: "cmsc5373-ramya-webapps.appspot.com",
-        messagingSenderId: "773754794552",
-        appId: "1:773754794552:web:24f91c111dcc895bc62ccd"
-      };
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAfoMI2xvjSpQcNIIR7Fpy62owH8ENdUaA",
+      authDomain: "cmsc5373-ramya-webapps.firebaseapp.com",
+      projectId: "cmsc5373-ramya-webapps",
+      storageBucket: "cmsc5373-ramya-webapps.appspot.com",
+      messagingSenderId: "773754794552",
+      appId: "1:773754794552:web:24f91c111dcc895bc62ccd"
+    };
 
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-    </script>
-    <script type="module" src="app.js"></script>
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"></script>
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
+  <script type="module" src="app.js"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

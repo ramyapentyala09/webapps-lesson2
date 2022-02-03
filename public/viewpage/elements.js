@@ -2,7 +2,8 @@ export const root = document.getElementById('root');
 
 // menu
 export const menuSignout = document.getElementById('menu-signout');
-
+export const menuHome = document.getElementById('menu-home')
+export const menuUsers = document.getElementById('menu-users')
 // form
 export const formSignin = document.getElementById('form-signin');
 
