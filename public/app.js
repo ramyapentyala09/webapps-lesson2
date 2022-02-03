@@ -14,7 +14,9 @@ window.addEventListener('popstate', e => {
     e.preventDefault();
     const pathname = window.location.pathname;
     const hash = window.location.hash;
-})
+    routing(pathname, hash);
+});
+
 FirebaseAuth.addEventListeners();
 HomePage.addEventListeners();
 UsersPage.addEventListeners();

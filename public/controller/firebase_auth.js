@@ -7,6 +7,7 @@ const auth = getAuth();
 import * as Elements from '../viewpage/elements.js'
 import * as Constants from '../model/constants.js'
 import * as Util from '../viewpage/util.js'
+import { routing } from "./route.js";
 
 export let currentUser = null;
 
@@ -52,6 +53,10 @@ elements = document.getElementsByClassName('modal-postauth');
 for (let i = 0; i < elements.length; i++) {
     elements[i].style.display = 'block'; 
 }
+const pathname = window.location.pathname;
+const hash = window.location.hash;
+routing(pathname, hash);
+
     } else {
 currentUser = null;
 let elements = document.getElementsByClassName('modal-preauth');
