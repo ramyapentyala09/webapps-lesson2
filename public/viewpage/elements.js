@@ -6,7 +6,11 @@ export const menuHome = document.getElementById('menu-home')
 export const menuUsers = document.getElementById('menu-users')
 // form
 export const formSignin = document.getElementById('form-signin');
-
+export const formAddProduct = {
+    form: document.getElementById('form-add-product'),
+    imageTag: document.getElementById('form-add-product-image-tag'),
+    imageButton: document.getElementById('form-add-product-image-button')
+};
 // modal
 
 export const modalInfobox = {
@@ -15,3 +19,4 @@ export const modalInfobox = {
     body: document.getElementById('modal-infobox-body'),
 }
 export const modalSignin = new bootstrap.Modal(document.getElementById('modal-signin'), {backdrop: 'static'});
+export const modalAddProduct = new bootstrap.Modal(document.getElementById('modal-add-product'), {backdrop: 'static'});
