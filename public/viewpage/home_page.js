@@ -1,6 +1,11 @@
 import * as Elements from './elements.js'
 import { routePathnames } from '../controller/route.js';
 import { currentUser } from '../controller/firebase_auth.js';
+import { Product } from '../model/product.js';
+import * as CloudFunctions from '../controller/cloud_functions.js'
+import * as Util from './util.js'
+import * as Constants from '../model/constants.js'
+
 
 let imageFile2Upload = null;
 
@@ -38,9 +43,25 @@ export function home_page() {
 
     Elements.root.innerHTML = html;
 }
-function addNewProduct(e) {
+async function addNewProduct(e) {
     e.preventDefault();
     const name = e.target.name.value;
     const price = e.target.price.value;
     const summary = e.target.summary.value;
+
+    const product = new Product({name, price, summary});
+
+    try {
+        //upload the product image => imageName, imageURL
+        product.imageName = 'n/a';
+        product.imageURL = 'n/a';
+        await CloudFunctions.addProduct(product.toFirestore());
+        Util.info('Sucsess!', `${product.name} added!`, Elements.modalAddProduct);
+
+    }catch (e){
+        if(Constants.DEV) console.log(e);
+        Util.info('Add product failed', `${e.code}: ${e.name} - ${e.message}`)
+        
+
+    }
 }

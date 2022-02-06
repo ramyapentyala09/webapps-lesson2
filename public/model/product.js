@@ -1,4 +1,4 @@
-class Product {
+export class Product {
     constructor(data) {
         this.name = data.name.toLowerCase().trim();
         this.price = typeof data.price == 'number' ? data.price : Number(data.price);
