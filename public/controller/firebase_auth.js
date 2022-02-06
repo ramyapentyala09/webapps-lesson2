@@ -8,6 +8,7 @@ import * as Elements from '../viewpage/elements.js'
 import * as Constants from '../model/constants.js'
 import * as Util from '../viewpage/util.js'
 import { routing } from "./route.js";
+import * as WelcomeMessage from "../viewpage/welcome_message.js"
 
 export let currentUser = null;
 
@@ -67,5 +68,6 @@ elements = document.getElementsByClassName('modal-postauth');
 for (let i = 0; i < elements.length; i++) {
     elements[i].style.display = 'none'; 
 }
+Elements.root.innerHTML = WelcomeMessage.html;
     }
 }

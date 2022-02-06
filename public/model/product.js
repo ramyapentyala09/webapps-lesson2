@@ -6,6 +6,11 @@ export class Product {
         this.imageName = data.imageName;
         this.imageURL = data.imageURL;
     }
+
+    set_docId(id) {
+        this.docId = id;
+    }
+
     toFirestore() {
         return {
             name: this.name,

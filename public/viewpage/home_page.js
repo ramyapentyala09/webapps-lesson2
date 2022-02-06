@@ -11,9 +11,13 @@ import * as CloudStorage from '../controller/cloud_storage.js'
 let imageFile2Upload = null;
 
 export function addEventListeners() {
-    Elements.menuHome.addEventListener('click', () => {
+    Elements.menuHome.addEventListener('click', async () => {
         history.pushState(null, null, routePathnames.HOME);
-        home_page();
+        const button = Elements.menuHome;
+        const label = Util.disableButton(button);
+        await home_page();
+        // await Util.sleep(1000)
+        Util.enableButton(button, label);
     });
     Elements.formAddProduct.imageButton.addEventListener('change', e => {
         imageFile2Upload = e.target.files[0];
@@ -29,7 +33,7 @@ export function addEventListeners() {
     Elements.formAddProduct.form.addEventListener('submit', addNewProduct);
 }
 
-export function home_page() {
+export async function home_page() {
     if (!currentUser) {
         Elements.root.innerHTML = '<h1>Protected Page</h1>'
         return;
@@ -41,6 +45,23 @@ export function home_page() {
     </button>
     </div>
     `;
+
+    let products;
+
+    try{
+        products = await CloudFunctions.getProductList();
+    } catch (e) {
+        if(Constants.DEV) console.log(e);
+        Util.info('Cannot get product List', JSON.stringify(e));
+        Elements.root.innerHTML = html;
+        return;
+
+    }
+
+    products.forEach(p => {
+        html += buildProductCard(p);
+
+    });
 
     Elements.root.innerHTML = html;
 }
@@ -64,10 +85,24 @@ async function addNewProduct(e) {
         Util.info('Sucsess!', `Added: ${product.name} added!, docId = ${docId}`,Elements.modalAddProduct);
         e.target.reset();
         Elements.formAddProduct.imageTag.removeAttribute('src');
+        await home_page(); // you may improve later
     }catch (e){
         if(Constants.DEV) console.log(e);
         Util.info('Add product failed', `${e.code}: ${e.name} - ${e.message}`, Elements.modalAddProduct);
 
     }
     Util.enableButton(button, label);
+}
+
+function buildProductCard(product){
+    return`
+    <div class="card d-inline-flex" style="width: 18rem;">
+    <img src="${product.imageURL}" class="card-img-top" >
+    <div class="card-body">
+      <h5 class="card-title">${product.name}</h5>
+      <p class="card-text">${product.price.toFixed(2)}<br>${product.summary}</p>
+      
+    </div>
+    </div>
+    `;
 }
