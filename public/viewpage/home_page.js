@@ -5,6 +5,7 @@ import { Product } from '../model/product.js';
 import * as CloudFunctions from '../controller/cloud_functions.js'
 import * as Util from './util.js'
 import * as Constants from '../model/constants.js'
+import * as CloudStorage from '../controller/cloud_storage.js'
 
 
 let imageFile2Upload = null;
@@ -51,17 +52,22 @@ async function addNewProduct(e) {
 
     const product = new Product({name, price, summary});
 
+    const button = e.target.getElementsByTagName('button')[0];
+    const label = Util.disableButton(button);
+
     try {
         //upload the product image => imageName, imageURL
-        product.imageName = 'n/a';
-        product.imageURL = 'n/a';
-        await CloudFunctions.addProduct(product.toFirestore());
-        Util.info('Sucsess!', `${product.name} added!`, Elements.modalAddProduct);
-
+        const {imageName, imageURL} = await CloudStorage.uploadImage(imageFile2Upload);
+        product.imageName = imageName;
+        product.imageURL = imageURL;
+        const docId = await CloudFunctions.addProduct(product.toFirestore());
+        Util.info('Sucsess!', `Added: ${product.name} added!, docId = ${docId}`,Elements.modalAddProduct);
+        e.target.reset();
+        Elements.formAddProduct.imageTag.removeAttribute('src');
     }catch (e){
         if(Constants.DEV) console.log(e);
-        Util.info('Add product failed', `${e.code}: ${e.name} - ${e.message}`)
-        
+        Util.info('Add product failed', `${e.code}: ${e.name} - ${e.message}`, Elements.modalAddProduct);
 
     }
+    Util.enableButton(button, label);
 }

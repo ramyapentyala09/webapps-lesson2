@@ -7,3 +7,8 @@
  export const COLLECTION_NAMES = {
     PRODUCTS: 'products',
 }
+
+export const STORAGEFOLDERNAMES = {
+    PRODUCT_IMAGES: 'product_images/',
+    
+}

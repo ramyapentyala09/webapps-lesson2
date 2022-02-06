@@ -24,7 +24,8 @@ async function addProduct(data, context){
       
   }
   try{
-    await admin.firestore().collection(Constants.COLLECTION_NAMES.PRODUCTS).add(data);
+    const ref = await admin.firestore().collection(Constants.COLLECTION_NAMES.PRODUCTS).add(data);
+    return ref.id; // doc id
   }catch (e) {
     if(Constants.DEV) console.log(e);
     throw new functions.https.HttpsError('internal',`add product failed: ${JSON.stringify(e)}`);

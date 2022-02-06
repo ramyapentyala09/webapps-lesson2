@@ -12,5 +12,6 @@ if (hostname == 'localhost' || hostname == '127.0.0.1'){
 
 const cfn_addProduct = httpsCallable(functions, 'cfn_addProduct');
 export async function addProduct(product){
-    await cfn_addProduct(product);
+    const result = await cfn_addProduct(product);
+    return result.data;
 }
