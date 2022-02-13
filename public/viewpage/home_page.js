@@ -65,24 +65,24 @@ export async function home_page() {
 
     Elements.root.innerHTML = html;
     const forms = document.getElementsByClassName('form-edit-delete-product');
-    for (let i= 0; i < forms.length; i++) {
+    for (let i = 0; i < forms.length; i++) {
         forms[i].addEventListener('submit', async e => {
-e.preventDefault();
-const buttons = e.target.getElementsByTagName('button');
-const submitter = e.target.submitter;
-if (submitter == 'EDIT') {
-    const label = Util.disableButton(buttons[0]);
-await EditProduct.edit_product(e.target.docId.value);
-await Util.sleep(1000)
-Util.enableButton(buttons[0], label);
-} else if (submitter == 'DELETE') {
-    const label = Util.disableButton(buttons[1]);
-    await EditProduct.delete_product(e.target.docId.value, e.target.imageName.value);
-// await Util.sleep(1000)
-    Util.enableButton(buttons[1], label);
-} else {
-    console.log('No such submitter', submitter);
-}
+            e.preventDefault();
+            const buttons = e.target.getElementsByTagName('button');
+            const submitter = e.target.submitter;
+            if (submitter == 'EDIT') {
+                const label = Util.disableButton(buttons[0]);
+                await EditProduct.edit_product(e.target.docId.value);
+                await Util.sleep(1000)
+                Util.enableButton(buttons[0], label);
+            } else if (submitter == 'DELETE') {
+                const label = Util.disableButton(buttons[1]);
+                await EditProduct.delete_product(e.target.docId.value, e.target.imageName.value);
+                // await Util.sleep(1000)
+                Util.enableButton(buttons[1], label);
+            } else {
+                console.log('No such submitter', submitter);
+            }
 
         })
     }
@@ -118,7 +118,7 @@ async function addNewProduct(e) {
 
 function buildProductCard(product) {
     return `
-    <div class="card d-inline-flex" style="width: 18rem;">
+    <div id='card-${product.docId}' class="card d-inline-flex" style="width: 18rem;">
     <img src="${product.imageURL}" class="card-img-top" >
     <div class="card-body">
       <h5 class="card-title">${product.name}</h5>

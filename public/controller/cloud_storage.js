@@ -1,5 +1,5 @@
 import {
-    getStorage, ref, uploadBytes, getDownloadURL,
+    getStorage, ref, uploadBytes, getDownloadURL, deleteObject
  } from "https://www.gstatic.com/firebasejs/9.6.5/firebase-storage.js"
 
  import * as Constants from '../model/constants.js'
@@ -15,6 +15,11 @@ import {
      const storageRef = ref(storage, Constants.STORAGEFOLDERNAMES.PRODUCT_IMAGES + imageName);
      const snapshot = await uploadBytes(storageRef, imageFile);
      const imageURL = await getDownloadURL(snapshot.ref);
-
+ 
      return{imageName, imageURL};
+ }
+
+ export async function deleteProductImage(imageName){
+    const storageRef = ref(storage, Constants.STORAGEFOLDERNAMES.PRODUCT_IMAGES + imageName);
+    await deleteObject(storageRef);
  }
