@@ -50,10 +50,24 @@ exports.cfn_getProductList = functions.https.onCall(async (data, context) => {
       products.push(p);
     })
     return products;
-  }catch (e) {
+  } catch (e) {
     if(Constants.DEV) console.log(e);
     throw new functions.https.HttpsError('internal',`getProductList failed: ${JSON.stringify(e)}`);
 
   }
 
+});
+exports.cfn_deleteProductDoc = functions.https.onCall(async (docId, context) => {
+  if (!authorised(context.auth.token.email)) {
+    if (Constants.DEV) console.log(e);
+    throw new functions.https.HttpsError('permission-denied', 'Only admin may invoke getProductList function');
+  }
+  try {
+await admin.firestore().collection(Constants.COLLECTION_NAMES.PRODUCTS)
+.doc(docId).delete();
+  } catch (e) {
+    if (Constants.DEV) console.log(e);
+    throw new functions.https.HttpsError('internal', `deleteProductDoc failed: ${JSON.stringify(e)}`);
+
+  }
 });
