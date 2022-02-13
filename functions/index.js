@@ -68,6 +68,6 @@ await admin.firestore().collection(Constants.COLLECTION_NAMES.PRODUCTS)
   } catch (e) {
     if (Constants.DEV) console.log(e);
     throw new functions.https.HttpsError('internal', `deleteProductDoc failed: ${JSON.stringify(e)}`);
-
+  
   }
 });
