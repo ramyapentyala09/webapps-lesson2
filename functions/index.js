@@ -71,3 +71,29 @@ exports.cfn_deleteProductDoc = functions.https.onCall(async (docId, context) => 
 
   }
 });
+
+exports.cfn_getProductById = functions.https.onCall(async (docId, context) => {
+  if (!authorised(context.auth.token.email)) {
+    if (Constants.DEV) console.log(e);
+    throw new functions.https.HttpsError('permission-denied', 'Only admin may invoke getProductList function');
+  }
+  try {
+    const doc = await admin.firestore().collection(Constants.COLLECTION_NAMES.PRODUCTS)
+    .doc(docId).get();
+    if(doc.exists){
+      const {name, summary, price, imageName, imageURL} = doc.data();
+      const p = {name, summary, price, imageName, imageURL};
+      p.docId = docId;
+      return p;
+    } else {
+      return null;
+    }
+
+  }catch (e) {
+    if (Constants.DEV) console.log(e);
+    throw new functions.https.HttpsError('internal', `getProductByID failed: ${JSON.stringify(e)}`);
+
+
+  }
+
+});

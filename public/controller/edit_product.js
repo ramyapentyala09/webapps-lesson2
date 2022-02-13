@@ -4,8 +4,19 @@ import * as Util from '../viewpage/util.js'
 import * as Constants from '../model/constants.js'
 
 export async function edit_product(docId) {
-    console.log('Edit', docId);
-
+    let product;
+    try {
+        product = await CloudFunctions.getProductById(docId);
+        if(!product) {
+            Util.info('getProductById error', 'No product found by id');
+            return;
+        }
+    } catch (e) {
+        if(Constants.DEV) console.log(e);
+        Util.info('getProductById error', JSON.stringify(e));
+        return;
+        
+    }
 }
 export async function delete_product(docId, imageName) {
     // 1. delete doc, 2. delete image
