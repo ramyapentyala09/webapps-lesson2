@@ -73,7 +73,7 @@ export async function home_page() {
             if (submitter == 'EDIT') {
                 const label = Util.disableButton(buttons[0]);
                 await EditProduct.edit_product(e.target.docId.value);
-                await Util.sleep(1000)
+                //await Util.sleep(1000)
                 Util.enableButton(buttons[0], label);
             } else if (submitter == 'DELETE') {
                 const label = Util.disableButton(buttons[1]);
