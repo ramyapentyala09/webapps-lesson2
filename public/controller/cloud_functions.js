@@ -45,3 +45,7 @@ export async function getProductById(docId) {
         return null;
     }
 }
+const cfn_updateProductDoc = httpsCallable(functions, 'cfn_updateProductDoc');
+export async function updateProductDoc(product) {
+    
+}
