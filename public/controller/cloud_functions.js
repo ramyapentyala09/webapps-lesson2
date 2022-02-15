@@ -46,6 +46,9 @@ export async function getProductById(docId) {
     }
 }
 const cfn_updateProductDoc = httpsCallable(functions, 'cfn_updateProductDoc');
-export async function updateProductDoc(product) {
-    
+export async function updateProductDoc(product) {   
+    const docId = product.docId;
+    const updateObject = product.toFirestoreForUpdate();
+    await cfn_updateProductDoc({docId, updateObject});
+
 }

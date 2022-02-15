@@ -7,7 +7,7 @@ import {
  const storage = getStorage();
 
  export async function uploadImage(imageFile, imageName){
-     if(!imageName){
+     if (!imageName) {
          imageName = imageFile.name + Date.now();
 
      }
@@ -19,7 +19,7 @@ import {
      return{imageName, imageURL};
  }
 
- export async function deleteProductImage(imageName){
+ export async function deleteProductImage(imageName) {
     const storageRef = ref(storage, Constants.STORAGEFOLDERNAMES.PRODUCT_IMAGES + imageName);
     await deleteObject(storageRef);
  }
