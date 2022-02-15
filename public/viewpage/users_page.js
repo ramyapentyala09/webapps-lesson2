@@ -74,7 +74,20 @@ Util.enableButton(buttons[0], label);
     }
 }
 async function toggleDisableUser(form) {
-await Util.sleep(1000);
+const uid = form.uid.value;
+const disabled = form.disabled.value;
+const update = {
+    disabled: disabled ? false : true,
+}
+document.getElementById(`user-status-${uid}`).innerHTML = `${update.disabled ? 'Disabled' : 'Active'}`;
+Util.info('Status toggled!', 'Disabled: ${update.disabled}');
+try {
+await CloudFunctions.updateUser(uid, update);
+form.disabled.value = `${update.disabled}`;
+} catch (e) {
+if (Constants.DEV) console.log(e);
+Util.info('Toggle user status failed', JSON.stringify(e));
+}
 }
 async function deleteUser(form) {
 await Util.sleep(1000);
@@ -83,7 +96,7 @@ function buildUserRow(user) {
     return `
     <tr>
     <td>${user.email}</td>
-    <td>${user.disables ? 'Disabled' : 'Active'}</td>
+    <td id="user-status-${user.uid}">${user.disabled ? 'Disabled' : 'Active'}</td>
     <td>
     <form class="form-manage-users" method="post">
     <input type="hidden" name="uid" value="${user.uid}">

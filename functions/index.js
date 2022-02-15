@@ -130,3 +130,19 @@ return userList;
 throw new functions.https.HttpsError('internal', `getUserList failed: ${JSON.stringify(e)}`);
   }
 });
+exports.cfn_updateUser = functions.https.onCall(async (data, context) => {
+  // data => {uid, updateInfo}, update = {key1: value1, key2: value2...}
+  if (!authorised(context.auth.token.email)) {
+    if (Constants.DEV) console.log(e);
+    throw new functions.https.HttpsError('permission-denied', 'Only admin may invoke updateProductDoc function');
+  }
+  try {
+const uid = data.uid;
+const update = data.update
+await admin.auth().updateUser(uid, update);
+  } catch (e) {
+    if (Constants.DEV) console.log(e);
+throw new functions.https.HttpsError('internal', `updateUser failed: ${JSON.stringify(e)}`);
+   
+  }
+});
