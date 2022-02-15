@@ -108,3 +108,25 @@ if (Constants.DEV) console.log(e);
 throw new functions.https.HttpsError('internal', `updateProductDoc failed: ${JSON.stringify(e)}`);
   }
 });
+exports.cfn_getUserList = functions.https.onCall(async (data, context) => {
+  if (!authorised(context.auth.token.email)) {
+    if (Constants.DEV) console.log(e);
+    throw new functions.https.HttpsError('permission-denied', 'Only admin may invoke updateProductDoc function');
+  }
+  const userList = [];
+  const MAXRESULTS = 2;
+  try {
+let result = await admin.auth().listUsers(MAXRESULTS);
+userList.push(...result.users); //... spread operator
+let nextPageToken = result.pageToken;
+while (nextPageToken) {
+  result = await admin.auth().listUsers(MAXRESULTS, nextPageToken);
+userList.push(...result.users);
+nextPageToken = result.pageToken;
+}
+return userList;
+  } catch (e) {
+    if (Constants.DEV) console.log(e);
+throw new functions.https.HttpsError('internal', `getUserList failed: ${JSON.stringify(e)}`);
+  }
+});

@@ -52,3 +52,13 @@ export async function updateProductDoc(product) {
     await cfn_updateProductDoc({docId, updateObject});
 
 }
+const cfn_getUserList = httpsCallable(functions, 'cfn_getUserList');
+export async function getUserList() {
+    const result = await cfn_getUserList({});
+    result.data.sort((a, b) => {
+        if (a.email > b.email) return 1;
+        else if (a.email < b.email) return -1;
+        else return 0;
+    })
+    return result.data;
+}
