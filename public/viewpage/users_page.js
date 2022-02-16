@@ -77,10 +77,10 @@ async function toggleDisableUser(form) {
 const uid = form.uid.value;
 const disabled = form.disabled.value;
 const update = {
-    disabled: disabled ? false : true,
+    disabled: disabled == 'true' ? false : true,
 }
 document.getElementById(`user-status-${uid}`).innerHTML = `${update.disabled ? 'Disabled' : 'Active'}`;
-Util.info('Status toggled!', 'Disabled: ${update.disabled}');
+Util.info('Status toggled!', `Disabled: ${update.disabled}`);
 try {
 await CloudFunctions.updateUser(uid, update);
 form.disabled.value = `${update.disabled}`;
@@ -90,11 +90,21 @@ Util.info('Toggle user status failed', JSON.stringify(e));
 }
 }
 async function deleteUser(form) {
-await Util.sleep(1000);
+// confirm
+if (!window.confirm('Press OK to delete the user')) return;
+const uid = form.uid.value;
+try {
+await CloudFunctions.deleteUser(uid);
+document.getElementById(`user-row-${uid}`).remove();
+Util.info('The user deleted!', `UID=${uid}`);
+} catch (e) {
+if (Constants.DEV) console.log(e);
+Util.info('Delete user failed', JSON.stringify(e));
+}
 }
 function buildUserRow(user) {
     return `
-    <tr>
+    <tr id="user-row-${user.uid}">
     <td>${user.email}</td>
     <td id="user-status-${user.uid}">${user.disabled ? 'Disabled' : 'Active'}</td>
     <td>

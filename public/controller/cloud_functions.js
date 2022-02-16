@@ -66,3 +66,8 @@ const cfn_updateUser = httpsCallable(functions, 'cfn_updateUser');
 export async function updateUser(uid, update) {
     await cfn_updateUser({uid, update});
 }
+
+const cfn_deleteUser = httpsCallable(functions, 'cfn_deleteUser');
+export async function deleteUser(uid) {
+    await cfn_deleteUser(uid);
+}
